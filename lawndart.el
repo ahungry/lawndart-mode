@@ -47,7 +47,7 @@
    '("module \\(.+\\)\\." 1 font-lock-doc-face)
    '("@override" . font-lock-doc-face)
    '("[\t ]*\\(if\\|then\\|else\\|interface\\|pred\\|func\\|module\\|implementation\\)" . font-lock-keyword-face)
-   '("[[:space:]($]\\(_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*\\)" 1 font-lock-preprocessor-face)
+   '("[[:space:]($]\\(_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*\\)" 1 font-lock-type-face)
    '("[[:space:]$]_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*" . font-lock-function-name-face)
    '("\\([[:lower:]_$0-9]*?\\)" 1 font-lock-variable-name-face)
    '("\\([[:upper:][:lower:]_$0-9]*?\\):" 1 font-lock-negation-char-face)
