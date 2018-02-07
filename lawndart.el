@@ -40,22 +40,69 @@
 ;;; Code:
 
 (require 'js)
+(require 'flycheck)
 
-(setq lawndart-font-lock-keywords-1
-  (list
-   '("%.*" . font-lock-comment-face)
-   '("module \\(.+\\)\\." 1 font-lock-doc-face)
-   '("@override" . font-lock-doc-face)
-   '("[\t ]*\\(if\\|then\\|else\\|interface\\|pred\\|func\\|module\\|implementation\\)" . font-lock-keyword-face)
-   '("[[:space:]($]\\(_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*\\)" 1 font-lock-type-face)
-   '("[[:space:]$]_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*" . font-lock-function-name-face)
-   '("\\([[:lower:]_$0-9]*?\\)" 1 font-lock-variable-name-face)
-   '("\\([[:upper:][:lower:]_$0-9]*?\\):" 1 font-lock-negation-char-face)
-   '("\\(\\w+\\)(" 1 font-lock-function-name-face)
-   '("<\\(\\w+\\)>" 1 font-lock-type-face)
-   ))
+(flycheck-define-checker dart
+  "A Dart syntax checker using the Dart tool dartanalyzer.
 
-(setq lawndart-font-lock-keywords
+See URL `http://dartlang.org/'."
+  ;; :command ("dartanalyzer" "--format machine" source)
+  :command ("dartanalyzer"
+            "--format=machine"
+            ;; (option "--format machine")
+            source-inplace)
+  :error-patterns
+  (
+   ;; INFO|HINT|UNUSED_IMPORT|/home/mcarter/src/flutter/blub_flutter/lib/main.dart|2|8|9|Unused import.
+   ;; (error line-start (file-name) ":" line ": error: " (message) line-end)
+   ;; (info line-start "INFO:.*?:.*?:" (file-name) ":" line ":" column ":.*?:" (message) line-end)
+   (info line-start
+         "INFO|"
+         (one-or-more any)              ; HINT
+         "|"
+         (one-or-more any)              ; UNUSED_ELEMENT etc.
+         "|"
+         (file-name)
+         "|" line "|" column "|" (one-or-more digit) "|"
+         (message) line-end)
+   (warning line-start
+         "WARN|"
+         (one-or-more any)              ; HINT
+         "|"
+         (one-or-more any)              ; UNUSED_ELEMENT etc.
+         "|"
+         (file-name)
+         "|" line "|" column "|" (one-or-more digit) "|"
+         (message) line-end)
+   (error line-start
+         "ERROR|"
+         (one-or-more any)              ; HINT
+         "|"
+         (one-or-more any)              ; UNUSED_ELEMENT etc.
+         "|"
+         (file-name)
+         "|" line "|" column "|" (one-or-more digit) "|"
+         (message) line-end)
+   )
+  :modes lawndart-mode)
+
+(add-to-list 'flycheck-checkers 'dart)
+
+(defvar lawndart-font-lock-keywords-1
+      (list
+       '("%.*" . font-lock-comment-face)
+       '("module \\(.+\\)\\." 1 font-lock-doc-face)
+       '("@override" . font-lock-doc-face)
+       '("[\t ]*\\(if\\|then\\|else\\|interface\\|pred\\|func\\|module\\|implementation\\)" . font-lock-keyword-face)
+       '("[[:space:]($]\\(_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*\\)" 1 font-lock-type-face)
+       '("[[:space:]$]_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*" . font-lock-function-name-face)
+       '("\\([[:lower:]_$0-9]*?\\)" 1 font-lock-variable-name-face)
+       '("\\([[:upper:][:lower:]_$0-9]*?\\):" 1 font-lock-negation-char-face)
+       '("\\(\\w+\\)(" 1 font-lock-function-name-face)
+       '("<\\(\\w+\\)>" 1 font-lock-type-face)
+       ))
+
+(defvar lawndart-font-lock-keywords
   (append
    lawndart-font-lock-keywords-1
    js--font-lock-keywords-3
