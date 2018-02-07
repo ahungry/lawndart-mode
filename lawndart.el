@@ -93,11 +93,11 @@ See URL `http://dartlang.org/'."
 
 (defvar lawndart-font-lock-keywords-1
       (list
-       '("%.*" . font-lock-comment-face)
-       '("module \\(.+\\)\\." 1 font-lock-doc-face)
+       '("[[:space:]]*\\(\\w*?\\):" 1 font-lock-builtin-face)
+       '("^library " . font-lock-keyword-face)
        '("@override" . font-lock-doc-face)
        '("[\t ]*\\(if\\|then\\|else\\|interface\\|pred\\|func\\|module\\|implementation\\)" . font-lock-keyword-face)
-       '("[[:space:]($]\\(_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*\\)" 1 font-lock-type-face)
+       '("[[:space:]{($]\\(_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*\\)" 1 font-lock-type-face)
        '("[[:space:]$]_*[[:upper:]]+[[:upper:][:lower:]_$0-9]*" . font-lock-function-name-face)
        '("\\([[:lower:]_$0-9]*?\\)" 1 font-lock-variable-name-face)
        '("\\([[:upper:][:lower:]_$0-9]*?\\):" 1 font-lock-negation-char-face)
