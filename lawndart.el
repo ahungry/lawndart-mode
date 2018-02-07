@@ -103,6 +103,7 @@ See URL `http://dartlang.org/'."
        '("\\([[:upper:][:lower:]_$0-9]*?\\):" 1 font-lock-negation-char-face)
        '("\\(\\w+\\)(" 1 font-lock-function-name-face)
        '("<\\(\\w+\\)>" 1 font-lock-type-face)
+       '("<\\(\\w+\\)," 1 font-lock-type-face)
        ))
 
 (defvar lawndart-font-lock-keywords
