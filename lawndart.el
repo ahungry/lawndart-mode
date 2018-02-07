@@ -49,6 +49,9 @@ See URL `http://dartlang.org/'."
   ;; :command ("dartanalyzer" "--format machine" source)
   :command ("dartanalyzer"
             "--format=machine"
+            (option-flag "--strong" t)
+            (option-flag "--no-implicit-casts" t)
+            (option-flag "--no-implicit-dynamic" t)
             ;; (option "--format machine")
             source-inplace)
   :error-patterns
