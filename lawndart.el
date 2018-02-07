@@ -1,6 +1,6 @@
 ;;; lawndart.el --- Major mode for editing dart  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2018 Free Software Foundation, Inc.
+;; Copyright (C) 2018 Matthew Carter <m@ahungry.com>
 
 ;; Author: Matthew Carter <m@ahungry.com>
 ;; Maintainer: Matthew Carter <m@ahungry.com>
